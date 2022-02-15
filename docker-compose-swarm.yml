@@ -1,0 +1,23 @@
+version: '3.8'
+
+networks:
+  my-healthy-app-network:
+
+services:
+  healthy:
+    image: ivplay4689/healthy
+    ports:
+      - "8080:80"
+    healthcheck:
+      test: curl -f http://localhost/is-healthy || exit 1
+      interval: 5s
+      timeout: 1s
+      retries: 3
+      start_period: 5s
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+        delay: 5s

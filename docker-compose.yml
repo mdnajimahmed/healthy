@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  api:
+    container_name: api
+    image: ivplay4689/healthy:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      DB_URL: jdbc:postgresql://postgres/postgres
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres@123
+      DB_POOL_SIZE: 4
+  db:
+    container_name: postgres
+    image: postgres:13.5
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres@123
+      POSTGRES_USER: postgres
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
+    driver: local
