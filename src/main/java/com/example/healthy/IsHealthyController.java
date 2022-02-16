@@ -23,7 +23,7 @@ public class IsHealthyController {
         this.inMemoryCache = inMemoryCache;
     }
 
-    @GetMapping("/health")
+    @GetMapping({"/health", "/"})
     public ResponseEntity getHealth() {
         if (inMemoryCache.isHealthy()) {
             return ResponseEntity.ok().build();
@@ -44,7 +44,7 @@ public class IsHealthyController {
         if (!inMemoryCache.isHealthy()) {
             return ResponseEntity.internalServerError().build();
         }
-        if(inMemoryCache.getMetadata()!=null){
+        if (inMemoryCache.getMetadata() != null) {
             return ResponseEntity.ok(inMemoryCache.getMetadata());
         }
         // Resolve the instanceId
@@ -79,7 +79,7 @@ public class IsHealthyController {
     @GetMapping("/task-info")
     public ResponseEntity<String> getTaskInfo() {
         String ecsContainerMetadataUri = System.getenv("ECS_CONTAINER_METADATA_URI") + "/task";
-        log.info("ecsContainerMetadataUri = {}",ecsContainerMetadataUri);
+        log.info("ecsContainerMetadataUri = {}", ecsContainerMetadataUri);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response
                 = restTemplate.getForEntity(ecsContainerMetadataUri, String.class);
