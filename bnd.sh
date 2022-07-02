@@ -6,5 +6,5 @@
 docker-compose -f docker-compose-build.yml build && \
 docker image push ivplay4689/healthy
 
-aws s3api put-object --bucket aws-sysops-exam-practice-4689 --key healthy-0.0.1-SNAPSHOT.jar --body app.jar
+ aws s3api put-object --bucket aws-sysops-exam-practice-4689 --key app.jar --body healthy-0.0.1-SNAPSHOT.jar
 
