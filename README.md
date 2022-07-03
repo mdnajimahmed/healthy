@@ -1,7 +1,7 @@
 # Introduction
 This app exposes some REST APIs that simulate different types of bottlenecks. Using these endpoints we can test the resilience of our infrastructure and do observability hands-on by creating alarms on several metrics.
 
-#Endpoints
+# Endpoints
 Here are the details of the endpoints exposed by this service
 ## Health Check
 - `/ or /health` - Returns the health of the API. By default, it returns 200. 
