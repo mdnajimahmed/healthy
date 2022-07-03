@@ -65,7 +65,7 @@ Here are some optional environment variables we can pass -
 I am using Heroku to have a free PostgreSQL server, we can also use docker. Also, I am using IntelliJ IDE for development.
 
 
-## Running the app in Amazon EC2 Linux:
+# Running the app in Amazon EC2 Linux:
 The user-data.sh does most of the heavy lifting for deploying this in AWS. The bash script has self-explanatory comments about what it does and how it does it. However, here are some highlights on what user-data.sh does -
 - Installs jq that is used to parse the database password from the SSM parameter store response.
 - Installs and configures cloudwatch unified agent(amazon-cloudwatch-agent), the config file(ssm:AmazonCloudWatch-healthy) comes from SSM.
@@ -168,7 +168,7 @@ and replace it with
 aws s3api get-object --bucket <YOUR_S3_BUCKET_NAME> --key healthy-0.0.1-SNAPSHOT.jar app.jar
 ```
 
-## Necessary IAM Permissions
+# Necessary IAM Permissions
 - `AmazonEC2RoleforSSM` : Required to talk to SSM Fleet manager.
 - `AmazonS3FullAccess`	: Required to download the jar file from s3. A better approach would be to host the jar file in GitHub and consume it from there. We can remove it then.
 - `AmazonEC2ReadOnlyAccess` - Required for `/meta` API to read ec2-metadata.
