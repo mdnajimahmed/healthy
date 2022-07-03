@@ -1,4 +1,4 @@
-package com.example.healthy;
+package com.example.healthy.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

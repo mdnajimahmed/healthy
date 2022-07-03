@@ -1,51 +1,33 @@
-package com.example.healthy;
+package com.example.healthy.service;
 
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
-import com.amazonaws.services.ec2.model.*;
+import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
+import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.Reservation;
 import com.amazonaws.util.EC2MetadataUtils;
-import dto.Metadata;
-import dto.Network;
+import com.example.healthy.repository.InMemoryCache;
+import com.example.healthy.dto.Metadata;
+import com.example.healthy.dto.Network;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@RestController
+@Service
 @Slf4j
-public class IsHealthyController {
+public class AwsInfraInfoService {
     private final InMemoryCache inMemoryCache;
 
-    public IsHealthyController(InMemoryCache inMemoryCache) {
+    public AwsInfraInfoService(InMemoryCache inMemoryCache) {
         this.inMemoryCache = inMemoryCache;
     }
 
-    @GetMapping({"/health", "/"})
-    public ResponseEntity getHealth() {
-        if (inMemoryCache.isHealthy()) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @GetMapping("/flip")
-    public ResponseEntity flipHealth() {
-        inMemoryCache.setHealthy(!inMemoryCache.isHealthy());
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/meta")
-    public ResponseEntity<Metadata> getMetaData() {
-        log.info("Fetching meta");
-        if (!inMemoryCache.isHealthy()) {
-            return ResponseEntity.internalServerError().build();
-        }
+    public Metadata extractEc2Details() {
         if (inMemoryCache.getMetadata() != null) {
-            return ResponseEntity.ok(inMemoryCache.getMetadata());
+            return inMemoryCache.getMetadata();
         }
         // Resolve the instanceId
         String instanceId = EC2MetadataUtils.getInstanceId();
@@ -56,7 +38,7 @@ public class IsHealthyController {
         // Resolve public IP
         AmazonEC2 client = AmazonEC2ClientBuilder.defaultClient();
         String publicAddress = client.describeInstances(new DescribeInstancesRequest()
-                .withInstanceIds(instanceId))
+                        .withInstanceIds(instanceId))
                 .getReservations()
                 .stream()
                 .map(Reservation::getInstances)
@@ -73,16 +55,15 @@ public class IsHealthyController {
         }).findFirst().orElse(null);
         Metadata metadata = new Metadata(instanceId, privateAddress, publicAddress, ec2InstanceRegion, availabilityZone, network);
         inMemoryCache.setMetadata(metadata);
-        return ResponseEntity.ok(metadata);
+        return metadata;
     }
 
-    @GetMapping("/task-info")
-    public ResponseEntity<String> getTaskInfo() {
+    public String extractEcsDetails() {
         String ecsContainerMetadataUri = System.getenv("ECS_CONTAINER_METADATA_URI") + "/task";
         log.info("ecsContainerMetadataUri = {}", ecsContainerMetadataUri);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response
                 = restTemplate.getForEntity(ecsContainerMetadataUri, String.class);
-        return ResponseEntity.ok(response.getBody());
+        return response.getBody();
     }
 }

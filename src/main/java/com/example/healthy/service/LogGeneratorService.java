@@ -1,21 +1,12 @@
-package com.example.healthy;
+package com.example.healthy.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
-@RestController
+@Service
 @Slf4j
-public class LogGeneratorController {
-    private Random random = new Random();
-
-    @GetMapping("/generate-log")
-    public ResponseEntity getSum(@RequestParam("h") int hint) throws Exception {
-        // generate
+public class LogGeneratorService {
+    public void generateLog(int hint) throws Exception {
         if (hint == 0) {
             log.trace("fake trace message");
         } else if (hint == 1) {
@@ -32,7 +23,5 @@ public class LogGeneratorController {
         else{
             throw new Exception("Unknown hint");
         }
-        return ResponseEntity.ok().build();
     }
 }
-

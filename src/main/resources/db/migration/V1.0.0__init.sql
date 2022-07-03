@@ -9,9 +9,9 @@ ver text;
    pid text;
    slp double precision;
 begin
---    select 0.2 + (random() ) into slp;
---    raise notice 'Sleep = %',slp;
---    perform pg_sleep(slp);
+   select 2.5 + (random() ) into slp;
+   raise notice 'Sleep = %',slp;
+   perform pg_sleep(slp);
 select version() into ver;
 select now()::text into tm;
 select pg_backend_pid()::text into pid;

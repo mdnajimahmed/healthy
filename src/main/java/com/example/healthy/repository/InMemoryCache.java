@@ -1,6 +1,6 @@
-package com.example.healthy;
+package com.example.healthy.repository;
 
-import dto.Metadata;
+import com.example.healthy.dto.Metadata;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 

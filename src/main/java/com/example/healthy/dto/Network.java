@@ -1,4 +1,4 @@
-package dto;
+package com.example.healthy.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
