@@ -32,7 +32,7 @@ It is well known that AWS Cloudwatch does not support memory metrics from ec2 in
 - `/slow-query` - API simulates slow SQL query situation. It calls a postgresql function that takes [2.5,3.5) seconds to return. 
 #### Use Case 
 This API is helpful to observe how a slow query affects users' response time and overall experience when there is a high RPS(request per second).
-This is a bit advanced use case that is not associated with AWS DevOps or infra but rather with application performance. However, we can see the fact that CRUD APIs are IO Bound not CPU Bound as calling this API with concurrency puts a very small load on the CPU. You will end up noticing that despite of having enough CPU, RAM, Disk and Network resources, the response time is slow and often erroneous! 
+This is a bit advanced use case that is not associated with AWS DevOps or infra but rather with application performance. However, we can see the fact that CRUD APIs are IO Bound not CPU Bound as calling this API with concurrency puts a very small load on the CPU. You will end up noticing that despite of having enough CPU, RAM, Disk and Network resources in your app server, the response time is slow and often erroneous! 
 
 ## Log Generator:
 - `/generate-log?h=1` - generates trace(h=1),debug(h=2),info(h=3),warn(h=4),error(h=5,ArrayIndexOutOfBoundsException),error(h=6,RuntimeException) logs. The api will produce exception for h∉{1,2,3,4,5,6}.
