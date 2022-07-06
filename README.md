@@ -174,7 +174,6 @@ aws s3api get-object --bucket <YOUR_S3_BUCKET_NAME> --key healthy-0.0.1-SNAPSHOT
 - `AmazonEC2ReadOnlyAccess` - Required for `/meta` API to read ec2-metadata.
 - `CloudWatchAgentServerPolicy`: Required to send logs from ec2 to Cloudwatch.
 - `AmazonSSMManagedInstanceCore`: Required for SSM interactions.(Advanced)
-- `CloudWatchFullAccess` - Not sure. Need to check by removing it. #Todo.
 
 # K6 
 K6 is my go-to load/stress testing tool. Hence, this repo includes some utility script inside the k6 directory under the root of the project directory that helps to generate load using k6.
