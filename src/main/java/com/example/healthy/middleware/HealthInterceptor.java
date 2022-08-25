@@ -17,7 +17,7 @@ public class HealthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (inMemoryCache.isHealthy()) {
+        if (inMemoryCache.isHealthy() || request.getRequestURI().contains("/health/flip")) {
             return true;
         }
         response.setStatus(503);
