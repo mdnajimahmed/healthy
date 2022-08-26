@@ -10,4 +10,5 @@ public class K8sPodInfo {
     private final String podName;
     private final String podNamespace;
     private final String myPodIp;
+    private final String appVersion;
 }

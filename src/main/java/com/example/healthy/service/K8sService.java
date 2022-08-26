@@ -12,6 +12,7 @@ public class K8sService {
         String podName = System.getenv("MY_POD_NAME");
         String podNamespace = System.getenv("MY_POD_NAMESPACE");
         String myPodIp = System.getenv("MY_POD_IP");
-        return new K8sPodInfo(hostname,podName,podNamespace,myPodIp);
+        String appVersion = System.getenv("COMMIT_SHA_6");
+        return new K8sPodInfo(hostname,podName,podNamespace,myPodIp,appVersion);
     }
 }
