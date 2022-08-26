@@ -52,6 +52,13 @@ We can play with log level, for example, we can simulate that the prod cloudwatc
   We can write some canary script to ensure that ASG and ALB are handling load properly by spinning up new instances.
 - `/task-info` API will produce the expected output if the app is running in ECS. #Todo - Update API details and necessary IAM permission.
 
+## Kubernetes Integration:
+  - `/k8s-identity` API will return kubernetes pod details - 
+    - hostname: Hostname of the docker container
+    - podName: Name of the pod
+    - podNamespace: Pod Namespace
+    - myPodIp: PodId
+    - appVersion: Version of the application(git sha)
 # Running the APP in Local
 This app depends on PostGreSQL. Here are the mandatory environment variables needed to be available during application runtime -
 - DB_URL(jdbc:postgresql://[HOSTNAME]:[PORT]/[DATABASE])
